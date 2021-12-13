@@ -1,0 +1,29 @@
+{% extends"layout.html" %}
+
+{% block content %}
+    <div class="content-section">
+        <h1 class="mt-4">Repair By Vehicle Type for {{text}} </h1>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                <th scope="col">Vehicle Type</th>
+                <th scope="col">Count of Repairs</th>
+                <th scope="col">Sum of Part Cost</th>
+                <th scope="col">Sum of Labor Cost</th>
+                <th scope="col">Sum of Total Cost</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in datavehicletype %}
+                    <tr>
+                        <td class="text-center" onclick="location.href='/report/repairbymanufacturertypedrilldown/ManufacturerName={{item[5]}}/VehicleType={{item[0]}}'"><a href="http://127.0.0.1:5000/report/repairbymanufacturertypedrilldown/ManufacturerName={{item[5]}}/VehicleType={{item[0]}}">{{item[0]}}</a></td>
+                        <td>{{item[1]}}</td>
+                        <td>{{item[2]}}</td>
+                        <td>{{item[3]}}</td>
+                        <td>{{item[4]}}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

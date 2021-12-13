@@ -1,0 +1,308 @@
+{% extends"layout.html" %}
+{% block content %}
+    <div class="content-section">
+        <form action="/searchCustomer" method="GET">
+            <table class="table table-hover table-bordered">
+                <h3 style="text-align: center; background-color: #ADD8E6"><STRONG>Vehicle Details</STRONG></h3>
+                <tr>
+                    <th style="background-color: #ADD8E6"><strong>VIN</strong></th>
+                    <td>{{ vehicle_details[0] }}</td>
+                </tr>
+                <tr>
+                    <th style="background-color: #ADD8E6"><strong>Manufacturer</strong></th>
+                    <td>{{ vehicle_details[4] }}</td>
+                </tr>
+                <tr>
+                    <th style="background-color: #ADD8E6"><strong>Model Name</strong></th>
+                    <td>{{ vehicle_details[3] }}</td>
+                </tr>
+                <tr>
+                    <th style="background-color: #ADD8E6"><strong>Model Year</strong></th>
+                    <td>{{ vehicle_details[2] }}</td>
+                </tr>
+                <tr>
+                    <th style="background-color: #ADD8E6"><strong>Color</strong></th>
+                    <td>{{ vehicle_details[5] }}</td>
+                </tr>
+                <tr>
+                    <th style="background-color: #ADD8E6"><strong>Description</strong></th>
+                    <td>{{ vehicle_details[7] }}</td>
+                </tr>
+                <tr>
+                    <th style="background-color: #ADD8E6"><strong>Vehicle Type</strong></th>
+                    <td>{{ vehicle_details[1] }}</td>
+                </tr>
+                {% if vehicle_details[1] == "Car" %}
+                    <tr>
+                        <th style="background-color: #ADD8E6"><strong>Number Of Doors</strong></th>
+                        <td>{{ vehicle_details[8] }}</td>
+                    </tr>
+                    <tr>
+                        <th style="background-color: #ADD8E6"><strong>List Price</strong></th>
+                        <td>{{ vehicle_details[6] }}</td>
+                    </tr>
+                    {% if session.role in ["Owner", "Inventory Clerk", "Manager"] %}
+                        {% if session.role in ["Owner", "Manager"] %}
+                            <tr>
+                                <th style="background-color: #ADD8E6"><strong>Inventory Clerk</strong></th>
+                                <td>{{ vehicle_details[11] }}</td>
+                            </tr>
+                            <tr>
+                                <th style="background-color: #ADD8E6"><strong>Date Added</strong></th>
+                                <td>{{ vehicle_details[10] }}</td>
+                            </tr>
+                        {% endif %}
+                        <tr>
+                            <th style="background-color: #ADD8E6"><strong>Invoice Price</strong></th>
+                            <td>{{ vehicle_details[9] }}</td>
+                        </tr>
+                    {% endif %}
+                {% elif vehicle_details[1] == "Convertible" %}
+                    <tr>
+                        <th style="background-color: #ADD8E6"><strong>Roof Type</strong></th>
+                        <td>{{ vehicle_details[8] }}</td>
+                    </tr>
+                    <tr>
+                        <th style="background-color: #ADD8E6"><strong>Back Seat Count</strong></th>
+                        <td>{{ vehicle_details[9] }}</td>
+                    </tr>
+                    <tr>
+                        <th style="background-color: #ADD8E6"><strong>List Price</strong></th>
+                        <td>{{ vehicle_details[6] }}</td>
+                    </tr>
+                    {% if session.role in ["Owner", "Inventory Clerk", "Manager"] %}
+                        {% if session.role in ["Owner", "Manager"] %}
+                            <tr>
+                                <th style="background-color: #ADD8E6"><strong>Inventory Clerk</strong></th>
+                                <td>{{ vehicle_details[12] }}</td>
+                            </tr>
+                            <tr>
+                                <th style="background-color: #ADD8E6"><strong>Date Added</strong></th>
+                                <td>{{ vehicle_details[11] }}</td>
+                            </tr>
+                        {% endif %}
+                        <tr>
+                        <th style="background-color: #ADD8E6"><strong>Invoice Price</strong></th>
+                        <td>{{ vehicle_details[10] }}</td>
+                        </tr>
+                    {% endif %}
+                {% elif vehicle_details[1] == "Truck" %}
+                    <tr>
+                        <th style="background-color: #ADD8E6"><strong>Cargo Capacity(in tons)</strong></th>
+                        <td>{{ vehicle_details[8] }}</td>
+                    </tr>
+                    <tr>
+                        <th style="background-color: #ADD8E6"><strong>Cargo Cover Type</strong></th>
+                        <td>{{ vehicle_details[9] }}</td>
+                    </tr>
+                    <tr>
+                        <th style="background-color: #ADD8E6"><strong>Number Of Rear Axles</strong></th>
+                        <td>{{ vehicle_details[10] }}</td>
+                    </tr>
+                    <tr>
+                        <th style="background-color: #ADD8E6"><strong>List Price</strong></th>
+                        <td>{{ vehicle_details[6] }}</td>
+                    </tr>
+                    {% if session.role in ["Owner", "Inventory Clerk", "Manager"] %}
+                        {% if session.role in ["Owner", "Manager"] %}
+                            <tr>
+                                <th style="background-color: #ADD8E6"><strong>Inventory Clerk</strong></th>
+                                <td>{{ vehicle_details[13] }}</td>
+                            </tr>
+                            <tr>
+                                <th style="background-color: #ADD8E6"><strong>Date Added</strong></th>
+                                <td>{{ vehicle_details[12] }}</td>
+                            </tr>
+                        {% endif %}
+                        <tr>
+                        <th style="background-color: #ADD8E6"><strong>Invoice Price</strong></th>
+                        <td>{{ vehicle_details[11] }}</td>
+                        </tr>
+                    {% endif %}
+                {% elif vehicle_details[1] == "Van" %}
+                    <tr>
+                        <th style="background-color: #ADD8E6"><strong>Has Driver’s Side Back Door</strong></th>
+                        <td>{{ vehicle_details[8] }}</td>
+                    </tr>
+                    <tr>
+                        <th style="background-color: #ADD8E6"><strong>List Price</strong></th>
+                        <td>{{ vehicle_details[6] }}</td>
+                    </tr>
+                    {% if session.role in ["Owner", "Inventory Clerk", "Manager"] %}
+                        {% if session.role in ["Owner", "Manager"] %}
+                            <tr>
+                                <th style="background-color: #ADD8E6"><strong>Inventory Clerk</strong></th>
+                                <td>{{ vehicle_details[11] }}</td>
+                            </tr>
+                            <tr>
+                                <th style="background-color: #ADD8E6"><strong>Date Added</strong></th>
+                                <td>{{ vehicle_details[10] }}</td>
+                            </tr>
+                        {% endif %}
+                        <tr>
+                        <th style="background-color: #ADD8E6"><strong>Invoice Price</strong></th>
+                        <td>{{ vehicle_details[9] }}</td>
+                        </tr>
+                    {% endif %}
+                {% elif vehicle_details[1] == "SUV" %}
+                    <tr>
+                        <th style="background-color: #ADD8E6"><strong>Drivetrain Type</strong></th>
+                        <td>{{ vehicle_details[8] }}</td>
+                    </tr>
+                    <tr>
+                        <th style="background-color: #ADD8E6"><strong>Number Of Cupholders</strong></th>
+                        <td>{{ vehicle_details[9] }}</td>
+                    </tr>
+                    <tr>
+                        <th style="background-color: #ADD8E6"><strong>List Price</strong></th>
+                        <td>{{ vehicle_details[6] }}</td>
+                    </tr>
+                    {% if session.role in ["Owner", "Inventory Clerk", "Manager"] %}
+                        {% if session.role in ["Owner", "Manager"] %}
+                            <tr>
+                                <th style="background-color: #ADD8E6"><strong>Inventory Clerk</strong></th>
+                                <td>{{ vehicle_details[12] }}</td>
+                            </tr>
+                            <tr>
+                                <th style="background-color: #ADD8E6"><strong>Date Added</strong></th>
+                                <td>{{ vehicle_details[11] }}</td>
+                            </tr>
+                        {% endif %}
+                        <tr>
+                            <th style="background-color: #ADD8E6"><strong>Invoice Price</strong></th>
+                            <td>{{ vehicle_details[10] }}</td>
+                        </tr>
+                    {% endif %}
+                {% endif %}
+
+                {% if session.role in ["Owner", "Salesperson"] %}
+                    {% if "Unsold" in vehicle_details%}
+                        <tr>
+                            <th style="background-color: #ADD8E6"><strong>Sale Status</strong></th>
+                            <td>Unsold</td>
+                        </tr>
+                        <tr>
+                            <th>
+                                <button class="btn btn-primary text-center" >Sell</button>
+                            </th>
+                        </tr>
+                    {% else %}
+                        <tr>
+                            <th style="background-color: #ADD8E6"><strong>Sale Status</strong></th>
+                            <td>Sold</td>
+                        </tr>
+                    {% endif%}
+                {% endif %}
+            </table>
+        </form>
+
+        {% if session.role in ["Owner", "Manager"] and "Sold" in vehicle_details %}
+            <form >
+                <table class="table table-hover table-bordered">
+                    <h3 style="text-align: center; background-color: #ADD8E6"><STRONG>Sale Details</STRONG></h3>
+                        {% if sale_section[6]|length == 2 %}
+                            <tr>
+                                <th style="background-color: #ADD8E6"><strong>Individual Name</strong></th>
+                                <td>{{ sale_section[6][0] }} {{ sale_section[6][1] }}</td>
+                            </tr>
+                        {% else %}
+                            <tr>
+                                <th style="background-color: #ADD8E6"><strong>Business Name</strong></th>
+                                <td>{{ sale_section[6][0] }}</td>
+                            </tr>
+                            <tr>
+                                <th style="background-color: #ADD8E6"><strong>Title</strong></th>
+                                <td>{{ sale_section[6][1] }}</td>
+                            </tr>
+                            <tr>
+                                <th style="background-color: #ADD8E6"><strong>Contact Name</strong></th>
+                                <td>{{ sale_section[6][2] }} {{ sale_section[6][3] }}</td>
+                            </tr>
+                        {% endif %}
+
+                        <tr>
+                            <th style="background-color: #ADD8E6"><strong>Email</strong></th>
+                            <td>{{ sale_section[7][0] }}</td>
+                        </tr>
+                        <tr>
+                            <th style="background-color: #ADD8E6"><strong>Phone Number</strong></th>
+                            <td>{{ sale_section[7][1] }}</td>
+                        </tr>
+                        <tr>
+                            <th style="background-color: #ADD8E6"><strong>Street</strong></th>
+                            <td>{{ sale_section[7][2] }}</td>
+                        </tr>
+                        <tr>
+                            <th style="background-color: #ADD8E6"><strong>City</strong></th>
+                            <td>{{ sale_section[7][3] }}</td>
+                        </tr>
+                        <tr>
+                            <th style="background-color: #ADD8E6"><strong>State</strong></th>
+                            <td>{{ sale_section[7][4] }}</td>
+                        </tr>
+                        <tr>
+                            <th style="background-color: #ADD8E6"><strong>Postal Code</strong></th>
+                            <td>{{ sale_section[7][5] }}</td>
+                        </tr>
+                        <tr>
+                            <th style="background-color: #ADD8E6"><strong>List Price</strong></th>
+                            <td>{{ vehicle_details[6] }}</td>
+                        </tr>
+                        <tr>
+                            <th style="background-color: #ADD8E6"><strong>Sold Price</strong></th>
+                            <td>{{ sale_section[3] }}</td>
+                        </tr>
+                        <tr>
+                            <th style="background-color: #ADD8E6"><strong>Sales Date</strong></th>
+                            <td>{{ sale_section[4] }}</td>
+                        </tr>
+                        <tr>
+                            <th style="background-color: #ADD8E6"><strong>Salesperson</strong></th>
+                            <td>{{ sale_section[5] }}</td>
+                        </tr>
+                </table>
+            </form>
+            {% if repair_details|length != 0 %}
+                <form>
+                    <table class="table table-hover table-striped table-responsive table-fixed">
+                {#                <div class="alert alert-success text-center alert-dismissible">#}
+                {#                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>#}
+                {#                    <h4>#}
+                {#                        <strong>Congratulations!</strong> We found <strong>{{ selected_vehicles_table|length }}</strong> results.#}
+                {#                    </h4>#}
+                {#                </div>#}
+                        <h3 style="text-align: center; background-color: #ADD8E6"><STRONG>Repair Details</STRONG></h3>
+                        <thead>
+                            <tr>
+                                <th><strong>No.</strong></th>
+                                <th><strong>Customer</strong></th>
+                                <th><strong>Service Writer</strong></th>
+                                <th><strong>Start Date</strong></th>
+                                <th><strong>End Date</strong></th>
+                                <th><strong>Labor Charge</strong></th>
+                                <th><strong>Part Cost</strong></th>
+                                <th><strong>Total Cost</strong></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                         {% for index in range(repair_details|length) %}
+                        {#                     {% for part in repair_details[index][] %}#}
+                                <tr>
+                                    <td>{{index + 1}}</td>
+                                    <td>{{ repair_details[index][0].split(',')[1] }} {{ repair_details[index][0].split(',')[2] }}</td>
+                                    <td>{{ repair_details[index][1] }}</td>
+                                    <td>{{ repair_details[index][2] }}</td>
+                                    <td>{{ repair_details[index][3] }}</td>
+                                    <td>{{ repair_details[index][7] }}</td>
+                                    <td>{{ repair_details[index][repair_details[index]|length-2] }}</td>
+                                    <td>{{ repair_details[index][repair_details[index]|length-1] }}</td>
+                                </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                {#            <a href="#" id="loadMore">Load More</a>#}
+                </form>
+            {% endif %}
+        {% endif %}
+    </div>
+{% endblock %}

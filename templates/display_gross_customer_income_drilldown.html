@@ -1,0 +1,67 @@
+{% extends"layout.html" %}
+
+{% block content %}
+    <div class="content-section">
+        <h1 class="mt-4">Vehicle Sale Records</h1>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                <th scope="col">Purchase Date</th>
+                <th scope="col">Sold Price</th>
+                <th scope="col">VIN</th>
+                <th scope="col">Model Year</th>
+                <th scope="col">Manufacturer Name</th>
+                <th scope="col">Model Name</th>
+                <th scope="col">Saleperson Name</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in datasale %}
+                    <tr>
+                        <td>{{item[0]}}</td>
+                        <td>{{item[1]}}</td>
+                        <td>{{item[2]}}</td>
+                        <td>{{item[3]}}</td>
+                        <td>{{item[4]}}</td>
+                        <td>{{item[5]}}</td>
+                        <td>{{item[6]}}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <div class="content-section">
+        <h1 class="mt-4">Vehicle Repair Records</h1>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                <th scope="col">Start Date</th>
+                <th scope="col">End Date</th>
+                <th scope="col">VIN</th>
+                <th scope="col">Odometer</th>
+                <th scope="col">Part Cost</th>
+                <th scope="col">Labor Charge</th>
+                <th scope="col">Total Repair Cost</th>
+                <th scope="col">Servicewriter Name</th>
+                <th scope="col">is Finished</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in datarepair %}
+                    <tr>
+                        <td>{{item[0]}}</td>
+                        <td>{{item[1]}}</td>
+                        <td>{{item[2]}}</td>
+                        <td>{{item[3]}}</td>
+                        <td>{{item[4]}}</td>
+                        <td>{{item[5]}}</td>
+                        <td>{{item[6]}}</td>
+                        <td>{{item[7]}}</td>
+                        <td>{{item[8]}}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

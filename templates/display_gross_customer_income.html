@@ -1,0 +1,39 @@
+{% extends"layout.html" %}
+
+{% block content %}
+    <div class="content-section">
+        <h1 class="mt-4">Gross Customer Income</h1>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                <th scope="col">Customer Name</th>
+                <th scope="col">First Repair Date</th>
+                <th scope="col">First Sale Date</th>
+                <th scope="col">Last Repair Date</th>
+                <th scope="col">Last Sale Date</th>
+                <th scope="col">Num of Sales</th>
+                <th scope="col">Num of Repairs</th>
+                <th scope="col">Total Sale</th>
+                <th scope="col">Total Repair Cost</th>
+                <th scope="col">Gross Income</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in data %}
+                    <tr>
+                        <td class="text-center" onclick="location.href='/report/grosscustomerincomedrilldown/Customer_ID={{item[10]}}'"><a href="http://127.0.0.1:5000/report/grosscustomerincomedrilldown/Customer_ID={{item[10]}}">{{item[0]}}</a></td>
+                        <td>{{item[1]}}</td>
+                        <td>{{item[2]}}</td>
+                        <td>{{item[3]}}</td>
+                        <td>{{item[4]}}</td>
+                        <td>{{item[5]}}</td>
+                        <td>{{item[6]}}</td>
+                        <td>{{item[7]}}</td>
+                        <td>{{item[8]}}</td>
+                        <td>{{item[9]}}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

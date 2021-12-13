@@ -1,0 +1,428 @@
+{% extends"layout.html" %}
+{% block content %}
+    <div class="content-section">
+        <form>
+            <h1 class="text-center">Repair Form</h1>
+            <table class="table table-hover table-bordered">
+                <h3 style="text-align: center; background-color: #ADD8E6"><STRONG>Vehicle Detials</STRONG></h3>
+                <tr>
+                    <th style="background-color: #ADD8E6"><strong>VIN</strong></th>
+                    <td>{{ vehicle_details[0] }}</td>
+                </tr>
+                <tr>
+                    <th style="background-color: #ADD8E6"><strong>Manufacturer</strong></th>
+                    <td>{{ vehicle_details[4] }}</td>
+                </tr>
+                <tr>
+                    <th style="background-color: #ADD8E6"><strong>Model Name</strong></th>
+                    <td>{{ vehicle_details[3] }}</td>
+                </tr>
+                <tr>
+                    <th style="background-color: #ADD8E6"><strong>Model Year</strong></th>
+                    <td>{{ vehicle_details[2] }}</td>
+                </tr>
+                <tr>
+                    <th style="background-color: #ADD8E6"><strong>Color</strong></th>
+                    <td>{{ vehicle_details[5] }}</td>
+                </tr>
+                <tr>
+                    <th style="background-color: #ADD8E6"><strong>Description</strong></th>
+                    <td>{{ vehicle_details[7] }}</td>
+                </tr>
+                <tr>
+                    <th style="background-color: #ADD8E6"><strong>Vehicle Type</strong></th>
+                    <td>{{ vehicle_details[1] }}</td>
+                </tr>
+                {% if vehicle_details[1] == "Car" %}
+                    <tr>
+                        <th style="background-color: #ADD8E6"><strong>Number Of Doors</strong></th>
+                        <td>{{ vehicle_details[8] }}</td>
+                    </tr>
+                    <tr>
+                        <th style="background-color: #ADD8E6"><strong>List Price</strong></th>
+                        <td>{{ vehicle_details[6] }}</td>
+                    </tr>
+                {% elif vehicle_details[1] == "Convertible" %}
+                    <tr>
+                        <th style="background-color: #ADD8E6"><strong>Roof Type</strong></th>
+                        <td>{{ vehicle_details[8] }}</td>
+                    </tr>
+                    <tr>
+                        <th style="background-color: #ADD8E6"><strong>Back Seat Count</strong></th>
+                        <td>{{ vehicle_details[9] }}</td>
+                    </tr>
+                    <tr>
+                        <th style="background-color: #ADD8E6"><strong>List Price</strong></th>
+                        <td>{{ vehicle_details[6] }}</td>
+                    </tr>
+                {% elif vehicle_details[1] == "Truck" %}
+                    <tr>
+                        <th style="background-color: #ADD8E6"><strong>Cargo Capacity(in tons)</strong></th>
+                        <td>{{ vehicle_details[8] }}</td>
+                    </tr>
+                    <tr>
+                        <th style="background-color: #ADD8E6"><strong>Cargo Cover Type</strong></th>
+                        <td>{{ vehicle_details[9] }}</td>
+                    </tr>
+                    <tr>
+                        <th style="background-color: #ADD8E6"><strong>Number Of Rear Axles</strong></th>
+                        <td>{{ vehicle_details[10] }}</td>
+                    </tr>
+                    <tr>
+                        <th style="background-color: #ADD8E6"><strong>List Price</strong></th>
+                        <td>{{ vehicle_details[6] }}</td>
+                    </tr>
+                {% elif vehicle_details[1] == "Van" %}
+                    <tr>
+                        <th style="background-color: #ADD8E6"><strong>Has Driver’s Side Back Door</strong></th>
+                        <td>{{ vehicle_details[8] }}</td>
+                    </tr>
+                    <tr>
+                        <th style="background-color: #ADD8E6"><strong>List Price</strong></th>
+                        <td>{{ vehicle_details[6] }}</td>
+                    </tr>
+                {% elif vehicle_details[1] == "SUV" %}
+                    <tr>
+                        <th style="background-color: #ADD8E6"><strong>Drivetrain Type</strong></th>
+                        <td>{{ vehicle_details[8] }}</td>
+                    </tr>
+                    <tr>
+                        <th style="background-color: #ADD8E6"><strong>Number Of Cupholders</strong></th>
+                        <td>{{ vehicle_details[9] }}</td>
+                    </tr>
+                    <tr>
+                        <th style="background-color: #ADD8E6"><strong>List Price</strong></th>
+                        <td>{{ vehicle_details[6] }}</td>
+                    </tr>
+                {% endif %}
+                {% if "Unsold" in vehicle_details%}
+                    <tr>
+                        <th style="background-color: #ADD8E6"><strong>Sale Status</strong></th>
+                        <td>Unsold</td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <th style="background-color: #ADD8E6"><strong>Sale Status</strong></th>
+                        <td>Sold</td>
+                    </tr>
+                {% endif%}
+            </table>
+
+        </form>
+
+        <div class="unfinished_button">
+            {% if has_unfinished is none %}
+                <tr>
+                    <th>
+                        <button class="btn btn-primary text-center" onclick="myFunction()" >Add Repair</button>
+                    </th>
+                </tr>
+            {% else %}
+                <tr>
+                    <th>
+                        <button class="btn btn-primary text-center"  onclick="myFunction2()">Add Part</button>
+                        <button class="btn btn-primary text-center"  onclick="myFunction3()">Update Labor Charge</button>
+                        <button class="btn btn-primary text-center"  onclick="myFunction4()">Complete Repair</button>
+                    </th>
+                </tr>
+            {% endif %}
+        </div>
+
+        {# add repair form   #}
+        <form id="add_repair_form" style="display: none; text-align: center" action="/addRepair" method="POST">
+            <table class="table table-hover table-bordered">
+                <tr>
+                    <th><a class="btn btn-primary text-center" href="{{ url_for('searchCustomer') }}" >Search Customer</a></th>
+                </tr>
+                {% if session["customer"] is not none %}
+                    {% if session.customer.customer_type == "Business" %}
+                        <tr>
+                            <th><label for="business_name" style="">Business Name</label></th>
+                            <td><input type="text" id="business_name" name="business_name" value="{{ session.customer.business_name }}" disabled></td>
+                        </tr>
+                    {% endif %}
+                    <tr>
+                        <th><label for="customer_name" style="">Selected Customer</label></th>
+                        <td><input type="text" id="customer_name" name="customer_name" value="{{ session["customer"]["customer_name"] }}" disabled></td>
+                    </tr>
+                {% endif %}
+                <tr>
+                    <th><label for="date">Start Date:</label></th>
+                    <td><input id="today" name="date" type="text" value="{{ session["dateNow"] }}" disabled></td>
+{#                    <td><input id="today" name="date" type="date" required></td>#}
+                </tr>
+                <tr>
+                    <th><label for="odometer">Odometer</label><br></th>
+                    <td><input id="odometer" name="odometer" type="number" min="1" required></td>
+                </tr>
+                <tr>
+                    <th><label for="charge">Labor Charge</label><br></th>
+                    <td><input id="charge" name="charge" type="number" min="1" step="any" required></td>
+                </tr>
+                <tr>
+                    <th><label for="desc">Description</label><br></th>
+                    <td><input id="desc" name="desc" type="text" style="width: 50em;" required></td>
+                </tr>
+            </table>
+            <input class="btn btn-primary" type="submit" name="addRepair" value="Submit">
+        </form>
+
+        {% if "unfinished_repair" in session %}
+        <form id="add_part_form" style="display: none; text-align: center; margin-top: 32px;" action="/addPart" method="POST">
+            <table class="table table-hover table-striped table-responsive table-fixed">
+                    <h3 style="text-align: center; background-color: #ADD8E6"><STRONG>Repair In Progress</STRONG></h3>
+                    <thead>
+                        <tr>
+                            <th><strong>Customer</strong></th>
+                            <th><strong>Service Writer</strong></th>
+                            <th><strong>Start Date</strong></th>
+                            <th><strong>End Date</strong></th>
+                            <th><strong>Odometer Reading</strong></th>
+                            <th><strong>Labor Charge</strong></th>
+                            <th><strong>Part Cost</strong></th>
+                            <th><strong>Total Cost</strong></th>
+                            <th><strong>Description</strong></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            {% if session.unfinished_repair.customer|length == 1 %}
+                                <td style="background-color: greenyellow">{{ session.unfinished_repair.customer[0] }} </td>
+                            {% else %}
+                                <td style="background-color: greenyellow">{{ session.unfinished_repair.customer[0] }} {{ session.unfinished_repair.customer[1] }}</td>
+                            {% endif %}
+                            <td>{{ session.unfinished_repair.writer }}</td>
+                            <td>{{ session.unfinished_repair.startDate }}</td>
+                            <td></td>
+                            <td>{{ session.unfinished_repair.odometer}}</td>
+                            <td>{{ session.unfinished_repair.charge }}</td>
+                            <td>{{ session.unfinished_repair.part_cost }}</td>
+                            <td>{{ session.unfinished_repair.total }}</td>
+                            <td>{{ session.unfinished_repair.desc }}</td>
+                        </tr>
+                    </tbody>
+            </table>
+            <table class="table table-hover table-bordered">
+                <tr>
+                    <th><label for="part_number">Part Number</label><br></th>
+                    <th><label for="vendor_name">Vendor Name</label><br></th>
+                    <th><label for="quantity">Part Quantity</label><br></th>
+                    <th><label for="price">Price Per Unit</label><br></th>
+                </tr>
+                <tr>
+                    <td><input id="part_number" name="part_number" type="text"  required></td>
+                    <td><input id="vendor_name" name="vendor_name" type="text"  required></td>
+                    <td><input id="quantity" name="quantity" type="number" min="1" required></td>
+                    <td><input id="price" name="price" type="number" step="any" required></td>
+                </tr>
+            </table>
+            <input class="btn btn-primary" type="submit" name="addPart" value="Add">
+        </form>
+
+        <form id="update_charge_form" style="display: none; text-align: center; margin-top: 32px;" action="/addRepair" method="POST">
+             <table class="table table-hover table-striped table-responsive table-fixed">
+                    <h3 style="text-align: center; background-color: #ADD8E6"><STRONG>Repair In Progress</STRONG></h3>
+                    <thead>
+                        <tr>
+                            <th><strong>Customer</strong></th>
+                            <th><strong>Service Writer</strong></th>
+                            <th><strong>Start Date</strong></th>
+                            <th><strong>End Date</strong></th>
+                            <th><strong>Odometer Reading</strong></th>
+                            <th><strong>Labor Charge</strong></th>
+                            <th><strong>Part Cost</strong></th>
+                            <th><strong>Total Cost</strong></th>
+                            <th><strong>Description</strong></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            {% if session.unfinished_repair.customer|length == 1 %}
+                                <td style="background-color: greenyellow">{{ session.unfinished_repair.customer[0] }} </td>
+                            {% else %}
+                                <td style="background-color: greenyellow">{{ session.unfinished_repair.customer[0] }} {{ session.unfinished_repair.customer[1] }}</td>
+                            {% endif %}
+                            <td>{{ session.unfinished_repair.writer }}</td>
+                            <td>{{ session.unfinished_repair.startDate }}</td>
+                            <td></td>
+                            <td>{{ session.unfinished_repair.odometer}}</td>
+                            <td style="background-color: orangered">{{ session.unfinished_repair.charge }}</td>
+                            <td>{{ session.unfinished_repair.part_cost }}</td>
+                            <td>{{ session.unfinished_repair.total }}</td>
+                            <td>{{ session.unfinished_repair.desc }}</td>
+                        </tr>
+                    </tbody>
+            </table>
+            <table class="table table-hover table-bordered">
+                <tr>
+                    <th><label for="charge">Labor Charge</label><br></th>
+                    <td><input id="charge" name="charge" type="number" min="1" step="any" required></td>
+                </tr>
+            </table>
+            <input class="btn btn-primary" type="submit" name="updateCharge" value="Update">
+        </form>
+
+        <form id="complete_repair_form" style="display: none; text-align: center; margin-top: 32px;" action="/completeRepair" method="POST">
+             <table class="table table-hover table-striped table-responsive table-fixed">
+                    <h3 style="text-align: center; background-color: #ADD8E6"><STRONG>Repair In Progress</STRONG></h3>
+                    <thead>
+                        <tr>
+                            <th><strong>Customer</strong></th>
+                            <th><strong>Service Writer</strong></th>
+                            <th><strong>Start Date</strong></th>
+                            <th><strong>End Date</strong></th>
+                            <th><strong>Odometer Reading</strong></th>
+                            <th><strong>Labor Charge</strong></th>
+                            <th><strong>Part Cost</strong></th>
+                            <th><strong>Total Cost</strong></th>
+                            <th><strong>Description</strong></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            {% if session.unfinished_repair.customer|length == 1 %}
+                                <td style="background-color: greenyellow">{{ session.unfinished_repair.customer[0] }} </td>
+                            {% else %}
+                                <td style="background-color: greenyellow">{{ session.unfinished_repair.customer[0] }} {{ session.unfinished_repair.customer[1] }}</td>
+                            {% endif %}
+                            <td>{{ session.unfinished_repair.writer }}</td>
+                            <td>{{ session.unfinished_repair.startDate }}</td>
+                            <td style="background-color: orangered"><input id="today" name="endDate" type="text" value="{{ session["dateNow"] }}" disabled></td>
+                            {#                    <td><input id="today" name="endDate" type="date" required></td>#}
+                            <td>{{ session.unfinished_repair.odometer}}</td>
+                            <td>{{ session.unfinished_repair.charge }}</td>
+                            <td>{{ session.unfinished_repair.part_cost }}</td>
+                            <td>{{ session.unfinished_repair.total }}</td>
+                            <td>{{ session.unfinished_repair.desc }}</td>
+                        </tr>
+                    </tbody>
+            </table>
+            <input class="btn btn-primary" type="submit" name="completeRepair" value="Confirm">
+        </form>
+        {% endif %}
+        {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                    {% for msg in messages %}
+                          <div class="alert alert-success alert-dismissible">
+                              <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                                <p>{{ msg }}</p>
+                          </div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+        {% if repair_details|length != 0 %}
+            <form>
+                <table class="table table-hover table-striped table-responsive table-fixed">
+                    <h3 style="text-align: center; background-color: #ADD8E6"><STRONG>Repair Details</STRONG></h3>
+                    <thead>
+                        <tr>
+                            <th><strong>No.</strong></th>
+                            <th><strong>Customer</strong></th>
+                            <th><strong>Service Writer</strong></th>
+                            <th><strong>Start Date</strong></th>
+                            <th><strong>End Date</strong></th>
+                            <th><strong>Odometer Reading</strong></th>
+                            <th><strong>Labor Charge</strong></th>
+                            <th><strong>Part Cost</strong></th>
+                            <th><strong>Total Cost</strong></th>
+                            <th><strong>Description</strong></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for index in range(repair_details|length) %}
+                         {% if repair_details[index][6] == 1%}
+                            <tr>
+                         {% else %}
+                            <tr style="background-color: greenyellow">
+                         {% endif %}
+                                <td>{{index + 1}}</td>
+                                <td>{{ repair_details[index][0].split(',')[1] }} {{ repair_details[index][0].split(',')[2] }}</td>
+                                <td>{{ repair_details[index][1] }}</td>
+                                <td>{{ repair_details[index][2] }}</td>
+                                <td>{{ repair_details[index][3] }}</td>
+                                <td>{{ repair_details[index][4] }}</td>
+                                <td>{{ repair_details[index][7] }}</td>
+                                <td>{{ repair_details[index][repair_details[index]|length-2] }}</td>
+                                <td>{{ repair_details[index][repair_details[index]|length-1] }}</td>
+                                <td>{{ repair_details[index][5] }}</td>
+                            </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            {#            <a href="#" id="loadMore">Load More</a>#}
+                {% if has_part == 1 %}
+                    <table class="table table-hover table-striped table-responsive table-fixed">
+                        <h3 style="text-align: center; background-color: #ADD8E6"><STRONG>Part Details</STRONG></h3>
+                        <thead>
+                            <tr>
+                                <th><strong>No.</strong></th>
+                                <th><strong>Customer</strong></th>
+                                <th><strong>Start Date</strong></th>
+                                <th><strong>Part Number</strong></th>
+                                <th><strong>Vendor Name</strong></th>
+                                <th><strong>Quantity</strong></th>
+                                <th><strong>Price Per Unit</strong></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {% for index in range(repair_part|length) %}
+                            {% if "unfinished_repair" in session %}
+                                {% if repair_part[index][2].strftime("%Y-%m-%d") == session.unfinished_repair.startDate %}
+                                    <tr style="background-color: greenyellow">
+                                {% endif %}
+                            {% else %}
+                                <tr>
+                            {% endif %}
+                                    <td>{{index + 1}}</td>
+                                    <td>{{ repair_part[index][0].split(',')[1] }} {{ repair_part[index][0].split(',')[2] }}</td>
+                                    <td>{{ repair_part[index][2] }}</td>
+                                    <td>{{ repair_part[index][10] }}</td>
+                                    <td>{{ repair_part[index][9] }}</td>
+                                    <td>{{ repair_part[index][11] }}</td>
+                                    <td>{{ repair_part[index][12] }}</td>
+                                </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                {% endif %}
+            </form>
+        {% endif %}
+    </div>
+
+    <script type="text/javascript">
+        {#document.getElementById('today').value = moment().format('YYYY-MM-DD');#}
+
+        function myFunction() {
+            var x = document.getElementById("add_repair_form");
+            if (x.style.display === "none") {
+            x.style.display = "block";
+            } else {
+            x.style.display = "none";
+            }
+        }
+        function myFunction2() {
+            var x = document.getElementById("add_part_form");
+            if (x.style.display === "none") {
+            x.style.display = "block";
+            } else {
+            x.style.display = "none";
+            }
+        }
+        function myFunction3() {
+            var x = document.getElementById("update_charge_form");
+            if (x.style.display === "none") {
+            x.style.display = "block";
+            } else {
+            x.style.display = "none";
+            }
+        }
+        function myFunction4() {
+            var x = document.getElementById("complete_repair_form");
+            if (x.style.display === "none") {
+            x.style.display = "block";
+            } else {
+            x.style.display = "none";
+            }
+        }
+    </script>
+{% endblock %}

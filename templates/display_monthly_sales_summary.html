@@ -1,0 +1,39 @@
+{% extends"layout.html" %}
+
+{% block content %}
+    <div class="content-section">
+        <h1 class="mt-4">Monthly Sales Summary</h1>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                <th scope="col">Year_Month</th>
+                <th scope="col">Total Number of Vehicles Sold</th>
+                <th scope="col">Total Sales Income</th>
+                <th scope="col">Total Net Income</th>
+                <th scope="col">Ratio (Sold Price/Invoice Price)</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in data %}
+                    {% if item[4] >= 125 %}
+                        <tr bgcolor = "red">
+                            <td class="text-center" onclick="location.href='/report/monthlysales/Yearmonth={{item[0]}}'"><a href="http://127.0.0.1:5000/report/monthlysales/Yearmonth={{item[0]}}">{{item[0]}}</a></td>
+                            <td>{{item[1]}}</td>
+                            <td>{{item[2]}}</td>
+                            <td>{{item[3]}}</td>
+                            <td>{{item[4]}}</td>
+                        </tr>
+                    {% else %}
+                        <tr>
+                            <td class="text-center" onclick="location.href='/report/monthlysales/Yearmonth={{item[0]}}'"><a href="http://127.0.0.1:5000/report/monthlysales/Yearmonth={{item[0]}}">{{item[0]}}</a></td>
+                            <td>{{item[1]}}</td>
+                            <td>{{item[2]}}</td>
+                            <td>{{item[3]}}</td>
+                            <td>{{item[4]}}</td>
+                        </tr>
+                    {% endif %}
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

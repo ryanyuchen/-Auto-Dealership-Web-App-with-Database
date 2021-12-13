@@ -1,0 +1,27 @@
+{% extends"layout.html" %}
+
+{% block content %}
+    <div class="content-section">
+        <h1 class="mt-4">Sales By Color</h1>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                <th scope="col">Color</th>
+                <th scope="col">30 days Sold Number</th>
+                <th scope="col">1 year Sold Number</th>
+                <th scope="col">Total Sold Number</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in data %}
+                    <tr>
+                        <td>{{item[0]}}</td>
+                        <td>{{item[1]}}</td>
+                        <td>{{item[2]}}</td>
+                        <td>{{item[3]}}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

@@ -1,0 +1,42 @@
+{% extends"layout.html" %}
+
+{% block content %}
+    <div class="content-section">
+        <h1 class="mt-4">Below Cost Sales</h1>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                <th scope="col">Purchase Date</th>
+                <th scope="col">Invoice Price</th>
+                <th scope="col">Sold Price</th>
+                <th scope="col">Ratio</th>
+                <th scope="col">Customer Name</th>
+                <th scope="col">Salesperson Name</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in data %}
+                    {% if item[3] < 0.95 %}
+                        <tr bgcolor = "red">
+                            <td>{{item[0]}}</td>
+                            <td>{{item[1]}}</td>
+                            <td>{{item[2]}}</td>
+                            <td>{{item[3]}}</td>
+                            <td>{{item[4]}}</td>
+                            <td>{{item[5]}}</td>
+                        </tr>
+                    {% else %}
+                        <tr>
+                            <td>{{item[0]}}</td>
+                            <td>{{item[1]}}</td>
+                            <td>{{item[2]}}</td>
+                            <td>{{item[3]}}</td>
+                            <td>{{item[4]}}</td>
+                            <td>{{item[5]}}</td>
+                        </tr>
+                    {% endif %}
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

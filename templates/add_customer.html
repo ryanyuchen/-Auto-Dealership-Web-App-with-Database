@@ -1,0 +1,137 @@
+{% extends"layout.html" %}
+{% block content %}
+    <div class="content-section">
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                {% for msg in messages %}
+                      <div class="alert alert-success alert-dismissible">
+                          <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                            <p>{{ msg }}</p>
+                      </div>
+                    {% if msg %}
+                        <a class="btn btn-primary add_customer" href="{{ '/searchCustomer' }}" >Search Existed Customer</a>
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+        <h2 style="text-align: center; background-color: #ADD8E6"><STRONG>New Customer Form</STRONG></h2>
+        <div>
+            <br>
+            <h5>Please Choose Customer Type:</h5>
+            <input type="radio" id="individual" name="customer" value="individual">
+            <label for="individual">Individual</label><br>
+            <input type="radio" id="business" name="customer" value="business">
+            <label for="business">Business</label><br>
+
+            <form action="/addCustomer" method="POST" id="individual_form">
+                {{ form1.hidden_tag() }}
+                <h3 style="text-align: center; background-color: #ADD8E6"><STRONG>Add New Individual</STRONG></h3>
+                <input type="hidden" id="individual_table" name="individual_table">
+                <div class="form-group">
+                    <label>{{ form1.DL_number.label(class="form-control-label") }}</label>
+                    {{ form1.DL_number(class="form-control form-control-lg")}}
+                </div>
+                 <div class="form-group">
+                    <label>{{ form1.individual_first_name.label(class="form-control-label") }}</label>
+                    {{ form1.individual_first_name(class="form-control form-control-lg")}}
+                </div>
+                 <div class="form-group">
+                    <label>{{ form1.individual_last_name.label(class="form-control-label") }}</label>
+                    {{ form1.individual_last_name(class="form-control form-control-lg")}}
+                </div>
+                <div class="form-group">
+                    <label>{{ form1.email.label(class="form-control-label") }}</label>
+                    {{ form1.email(class="form-control form-control-lg")}}
+                </div>
+                 <div class="form-group">
+                    <label>{{ form1.phone_number.label(class="form-control-label") }}</label>
+                    {{ form1.phone_number(class="form-control form-control-lg")}}
+                </div>
+                 <div class="form-group">
+                    <label>{{ form1.street.label(class="form-control-label") }}</label>
+                    {{ form1.street(class="form-control form-control-lg")}}
+                </div>
+                 <div class="form-group">
+                    <label>{{ form1.city.label(class="form-control-label") }}</label>
+                    {{ form1.city(class="form-control form-control-lg")}}
+                </div>
+                 <div class="form-group">
+                    <label>{{ form1.state.label(class="form-control-label") }}</label>
+                    {{ form1.state(class="form-control form-control-lg")}}
+                </div>
+                <div class="form-group">
+                    <label>{{ form1.postal_code.label(class="form-control-label") }}</label>
+                    {{ form1.postal_code(class="form-control form-control-lg")}}
+                </div>
+                <div class="form-group">
+                    {{ form1.submit(class="btn btn-warning") }}
+                </div>
+            </form>
+
+            <form action="/addCustomer" method="POST" id="business_form">
+                {{ form2.hidden_tag() }}
+                <h3 style="text-align: center; background-color: #ADD8E6"><STRONG>Add New Business</STRONG></h3>
+                <input type="hidden" id="customer_table" name="customer_table">
+                <div class="form-group">
+                    <label>{{ form2.TIN_number.label(class="form-control-label") }}</label>
+                    {{ form2.TIN_number(class="form-control form-control-lg")}}
+                </div>
+                 <div class="form-group">
+                    <label>{{ form2.business_name.label(class="form-control-label") }}</label>
+                    {{ form2.business_name(class="form-control form-control-lg")}}
+                </div>
+                 <div class="form-group">
+                    <label>{{ form2.pc_first_name.label(class="form-control-label") }}</label>
+                    {{ form2.pc_first_name(class="form-control form-control-lg")}}
+                </div>
+                <div class="form-group">
+                    <label>{{ form2.pc_last_name.label(class="form-control-label") }}</label>
+                    {{ form2.pc_last_name(class="form-control form-control-lg")}}
+                </div>
+                 <div class="form-group">
+                    <label>{{ form2.pc_title.label(class="form-control-label") }}</label>
+                    {{ form2.pc_title(class="form-control form-control-lg")}}
+                </div>
+                <div class="form-group">
+                    <label>{{ form2.email.label(class="form-control-label") }}</label>
+                    {{ form2.email(class="form-control form-control-lg")}}
+                </div>
+                 <div class="form-group">
+                    <label>{{ form2.phone_number.label(class="form-control-label") }}</label>
+                    {{ form2.phone_number(class="form-control form-control-lg")}}
+                </div>
+                 <div class="form-group">
+                    <label>{{ form2.street.label(class="form-control-label") }}</label>
+                    {{ form2.street(class="form-control form-control-lg")}}
+                </div>
+                <div class="form-group">
+                    <label>{{ form2.city.label(class="form-control-label") }}</label>
+                    {{ form2.city(class="form-control form-control-lg")}}
+                </div>
+                 <div class="form-group">
+                    <label>{{ form2.state.label(class="form-control-label") }}</label>
+                    {{ form2.state(class="form-control form-control-lg")}}
+                </div>
+                 <div class="form-group">
+                    <label>{{ form2.postal_code.label(class="form-control-label") }}</label>
+                    {{ form2.postal_code(class="form-control form-control-lg")}}
+                </div>
+                <div class="form-group">
+                    {{ form2.submit(class="btn btn-warning") }}
+                </div>
+            </form>
+        </div>
+
+        <script>
+            $("#individual").on("click", function(){
+                $("#individual_form").show();
+                $("#business_form").hide();
+            });
+
+            $("#business").on("click", function(){
+                $("#individual_form").hide();
+                $("#business_form").show();
+            });
+        </script>
+    </div>
+{% endblock %}

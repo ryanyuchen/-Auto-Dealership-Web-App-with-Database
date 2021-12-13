@@ -1,0 +1,194 @@
+{% extends"layout.html" %}
+{% block content %}
+    <div class="content-section">
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                {% for msg in messages %}
+                      <div class="alert alert-danger alert-dismissible">
+                          <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                            <p>{{ msg }}</p>
+                      </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+        <form id ="register-new-vehicle-from" action="{{ url_for('addVehicle') }}" method="post">
+            <table class="table table-hover table-bordered">
+                <h3 style="text-align: center; background-color: #ADD8E6"><STRONG>Register New Vehicle</STRONG></h3>
+                <tr>
+                    <th style="background-color: #ADD8E6"><strong>VIN</strong></th>
+                    <td>
+                        {{ form.vin(class="form-control form-control-lg")}}
+                    </td>
+                </tr>
+                <tr>
+                    <th style="background-color: #ADD8E6"><strong>Manufacturer</strong></th>
+                    <td>
+                        {{ form.manufacturer(class="form-control form-control-lg")}}
+                    </td>
+                </tr>
+                <tr>
+                    <th style="background-color: #ADD8E6"><strong>Model Name</strong></th>
+                    <td>
+                        {{ form.modelName(class="form-control form-control-lg")}}
+                    </td>
+                </tr>
+                <tr>
+                    <th style="background-color: #ADD8E6"><strong>Model Year</strong></th>
+                    <td>
+                        <select name="modelYear" class="form-control">
+                            <option selected >2021</option>
+                            {% for year in form.modelYear %}
+                                <option>{{ year.data }}</option>
+                            {% endfor %}
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <th style="background-color: #ADD8E6"><strong>Vehicle Type</strong></th>
+                    <td>
+                        <select name="vehicleType" class="form-control" onchange="refreshForm()">
+                            {% for type in form.vehicleType %}
+                                <option>{{ type.data }}</option>
+                            {% endfor %}
+                        </select>
+                    </td>
+                </tr>
+
+                <tr style="display: none", id="numberOfDoors">
+                    <th style="background-color: #ADD8E6"><strong>Number Of Doors</strong></th>
+                    <td>
+{#                        <select name="numberOfDoors" class="form-control">#}
+{#                            {% for doors in form.numberOfDoors %}#}
+{#                                <option>{{ doors.data }}</option>#}
+{#                            {% endfor %}#}
+{#                        </select>#}
+                         {{ form.numberOfDoors(class="form-control form-control-lg") }}
+                    </td>
+                </tr>
+
+
+                <tr style="display: none", id="roofType">
+                    <th style="background-color: #ADD8E6"><strong>Roof Type</strong></th>
+                    <td>
+{#                        <select name="roofType" class="form-control">#}
+{#                            {% for type in form.roofType %}#}
+{#                                <option>{{ type.data }}</option>#}
+{#                            {% endfor %}#}
+{#                        </select>#}
+                         {{ form.roofType(class="form-control form-control-lg") }}
+                    </td>
+                </tr>
+
+                <tr style="display: none", id="backSeatCount">
+                    <th style="background-color: #ADD8E6"><strong>Back Seat Count</strong></th>
+                    <td>
+                        {{ form.backSeatCount(class="form-control form-control-lg")}}
+                    </td>
+                </tr>
+
+                <tr style="display: none", id="cargoCapacity">
+                    <th style="background-color: #ADD8E6"><strong>Cargo Capacity(in tons)</strong></th>
+                    <td>
+                        {{ form.cargoCapacity(class="form-control form-control-lg")}}
+                    </td>
+                </tr>
+                <tr style="display: none", id="cargoCoverType">
+                    <th style="background-color: #ADD8E6"><strong>Cargo Cover Type</strong></th>
+                    <td>
+{#                        <select name="cargoCoverType" class="form-control">#}
+{#                            {% for item in form.cargoCoverType %}#}
+{#                                <option>{{ item.data }}</option>#}
+{#                            {% endfor %}#}
+{#                        </select>#}
+                        {{ form.cargoCoverType(class="form-control form-control-lg")}}
+                    </td>
+                </tr>
+                <tr style="display: none", id="noOfRearAxles">
+                    <th style="background-color: #ADD8E6"><strong>Number Of Rear Axles</strong></th>
+                    <td>
+                        {{ form.noOfRearAxles(class="form-control form-control-lg")}}
+                    </td>
+                </tr>
+                <tr style="display: none", id="hasBackDoor">
+                    <th style="background-color: #ADD8E6"><strong>Has Driver’s Side Back Door</strong></th>
+                    <td>
+                        <select name="hasBackDoor" class="form-control">
+                            {% for item in form.hasBackDoor %}
+                                <option>{{ item.data }}</option>
+                            {% endfor %}
+                        </select>
+                    </td>
+                </tr>
+                <tr style="display: none", id="drivetrainType">
+                    <th style="background-color: #ADD8E6"><strong>Drivetrain Type</strong></th>
+                    <td>
+{#                        <select name="drivetrainType" class="form-control">#}
+{#                            {% for item in form.drivetrainType %}#}
+{#                                <option>{{ item.data }}</option>#}
+{#                            {% endfor %}#}
+{#                        </select>#}
+                        {{ form.drivetrainType(class="form-control form-control-lg")}}
+                    </td>
+                </tr>
+                <tr style="display: none", id="noOfCupHolders">
+                    <th style="background-color: #ADD8E6"><strong>Number Of CupHolders</strong></th>
+                    <td>
+                        {{ form.noOfCupHolders(class="form-control form-control-lg")}}
+                    </td>
+                </tr>
+
+                <tr>
+                    <th style="background-color: #ADD8E6"><strong>Color</strong></th>
+                    <td>
+                        <select multiple class="form-control" id="colors" name="colors" required>
+                          {% for color in form.colors %}
+                              {{ color }}
+                          {% endfor %}
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <th style="background-color: #ADD8E6"><strong>Invoice Price</strong></th>
+                    <td>{{ form.invoicePrice(class="form-control form-control-lg") }}</td>
+                </tr>
+                <tr>
+                    <th style="background-color: #ADD8E6"><strong>Description</strong></th>
+                    <td>{{ form.description(class="form-control form-control-lg") }}</td>
+                </tr>
+            </table>
+
+             <div class="form-group">
+                 {{ form.submit(class="btn btn-success") }}
+             </div>
+        </form>
+
+    </div>
+    </div>
+    <script type="text/javascript" charset="utf-8">
+
+    function refreshForm() {
+        var vehicleType = "";
+        var form = $('form').serializeArray();
+        for (const entry of form) {
+            if (entry['name'] == "vehicleType") {
+                vehicleType = entry['value'];
+            }
+        }
+        document.getElementById("numberOfDoors").style.display = vehicleType == "Car" ? 'table-row' : 'none';
+
+        document.getElementById("backSeatCount").style.display = vehicleType == "Convertible" ? 'table-row' : 'none';
+        document.getElementById("roofType").style.display = vehicleType == "Convertible" ? 'table-row' : 'none';
+
+        document.getElementById("noOfCupHolders").style.display = (vehicleType == "SUV") ? 'table-row' : 'none';
+        document.getElementById("drivetrainType").style.display = vehicleType == "SUV" ? 'table-row' : 'none';
+
+        document.getElementById("noOfRearAxles").style.display = vehicleType == "Truck" ? 'table-row' : 'none';
+        document.getElementById("cargoCapacity").style.display = vehicleType == "Truck" ? 'table-row' : 'none';
+        document.getElementById("cargoCoverType").style.display = vehicleType == "Truck" ? 'table-row' : 'none';
+
+        document.getElementById("hasBackDoor").style.display = vehicleType == "Van" ? 'table-row' : 'none';
+    }
+    </script>
+{% endblock %}
+
+

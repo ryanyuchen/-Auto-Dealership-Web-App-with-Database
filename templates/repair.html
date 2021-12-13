@@ -1,0 +1,27 @@
+{% extends"layout.html" %}
+{% block content %}
+    <div class="content-section">
+        <h3 class="filter" style="text-align: center"> Search By VIN</h3>
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                {% for msg in messages %}
+                      <div class="alert alert-success alert-dismissible">
+                          <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                            <p>{{ msg }}</p>
+                      </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+        <form  method="POST" action="/search" class="form-group">
+            {{ form.hidden_tag()}}
+            <input type="hidden" id="search_vin" name="search_by_vin_in_repair">
+            <div class="form-group">
+                <label>{{ form.vin.label(class="form-control-label") }}</label>
+                {{ form.vin(class="form-control form-control-lg")}}
+            </div>
+            <div class="form-group">
+                {{ form.submit(class="btn btn-warning") }}
+            </div>
+        </form>
+    </div>
+{% endblock %}

@@ -1,0 +1,225 @@
+{% extends"layout.html" %}
+{% block content %}
+    <div class="content-section">
+        <form action="/salesOrder" method="POST">
+            {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                    {% for msg in messages %}
+                          <div class="alert alert-success alert-dismissible">
+                              <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                                <p>{{ msg }}</p>
+                          </div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+            <h1 style="text-align: center; background-color: #ADD8E6"><STRONG>Sales Order</STRONG></h1>
+            <h2 style="text-align: left; background-color: #ADD8E6"><STRONG>Vehicle Details</STRONG></h2>
+            <table class="table table-hover table-bordered">
+                <tr>
+                    <th style="background-color: #ADD8E6"><strong>VIN</strong></th>
+                    <td>{{ vehicle_details[0] }}</td>
+                </tr>
+                <tr>
+                    <th style="background-color: #ADD8E6"><strong>Manufacturer</strong></th>
+                    <td>{{ vehicle_details[4] }}</td>
+                </tr>
+                <tr>
+                    <th style="background-color: #ADD8E6"><strong>Model Name</strong></th>
+                    <td>{{ vehicle_details[3] }}</td>
+                </tr>
+                <tr>
+                    <th style="background-color: #ADD8E6"><strong>Model Year</strong></th>
+                    <td>{{ vehicle_details[2] }}</td>
+                </tr>
+                <tr>
+                    <th style="background-color: #ADD8E6"><strong>Color</strong></th>
+                    <td>{{ vehicle_details[5] }}</td>
+                </tr>
+                <tr>
+                    <th style="background-color: #ADD8E6"><strong>Description</strong></th>
+                    <td>{{ vehicle_details[7] }}</td>
+                </tr>
+                <tr>
+                    <th style="background-color: #ADD8E6"><strong>Vehicle Type</strong></th>
+                    <td>{{ vehicle_details[1] }}</td>
+                </tr>
+                {% if vehicle_details[1] == "Car" %}
+                    <tr>
+                        <th style="background-color: #ADD8E6"><strong>Number Of Doors</strong></th>
+                        <td>{{ vehicle_details[8] }}</td>
+                    </tr>
+                    <tr>
+                        <th style="background-color: #ADD8E6"><strong>List Price</strong></th>
+                        <td>{{ vehicle_details[6] }}</td>
+                    </tr>
+                    {% if session.role in ["Owner"] %}
+                        <tr>
+                            <th style="background-color: #ADD8E6"><strong>Invoice Price</strong></th>
+                            <td>{{ vehicle_details[9] }}</td>
+                        </tr>
+                        <tr>
+                            <th style="background-color: #ADD8E6"><strong>Inventory Clerk</strong></th>
+                            <td>{{ vehicle_details[11] }}</td>
+                        </tr>
+                        <tr>
+                            <th style="background-color: #ADD8E6"><strong>Date Added</strong></th>
+                            <td>{{ vehicle_details[10] }}</td>
+                        </tr>
+                    {% endif %}
+                {% elif vehicle_details[1] == "Convertible" %}
+                    <tr>
+                        <th style="background-color: #ADD8E6"><strong>Roof Type</strong></th>
+                        <td>{{ vehicle_details[8] }}</td>
+                    </tr>
+                    <tr>
+                        <th style="background-color: #ADD8E6"><strong>Back Seat Count</strong></th>
+                        <td>{{ vehicle_details[9] }}</td>
+                    </tr>
+                    <tr>
+                        <th style="background-color: #ADD8E6"><strong>List Price</strong></th>
+                        <td>{{ vehicle_details[6] }}</td>
+                    </tr>
+                    {% if session.role in ["Owner"] %}
+                        <tr>
+                            <th style="background-color: #ADD8E6"><strong>Invoice Price</strong></th>
+                            <td>{{ vehicle_details[10] }}</td>
+                        </tr>
+                        <tr>
+                            <th style="background-color: #ADD8E6"><strong>Inventory Clerk</strong></th>
+                            <td>{{ vehicle_details[12] }}</td>
+                        </tr>
+                        <tr>
+                            <th style="background-color: #ADD8E6"><strong>Date Added</strong></th>
+                            <td>{{ vehicle_details[11] }}</td>
+                        </tr>
+                    {% endif %}
+                {% elif vehicle_details[1] == "Truck" %}
+                    <tr>
+                        <th style="background-color: #ADD8E6"><strong>Cargo Capacity(in tons)</strong></th>
+                        <td>{{ vehicle_details[8] }}</td>
+                    </tr>
+                    <tr>
+                        <th style="background-color: #ADD8E6"><strong>Cargo Cover Type</strong></th>
+                        <td>{{ vehicle_details[9] }}</td>
+                    </tr>
+                    <tr>
+                        <th style="background-color: #ADD8E6"><strong>Number Of Rear Axles</strong></th>
+                        <td>{{ vehicle_details[10] }}</td>
+                    </tr>
+                    <tr>
+                        <th style="background-color: #ADD8E6"><strong>List Price</strong></th>
+                        <td>{{ vehicle_details[6] }}</td>
+                    </tr>
+                    {% if session.role in ["Owner"] %}
+                        <tr>
+                            <th style="background-color: #ADD8E6"><strong>Invoice Price</strong></th>
+                            <td>{{ vehicle_details[11] }}</td>
+                        </tr>
+                        <tr>
+                            <th style="background-color: #ADD8E6"><strong>Inventory Clerk</strong></th>
+                            <td>{{ vehicle_details[13] }}</td>
+                        </tr>
+                        <tr>
+                            <th style="background-color: #ADD8E6"><strong>Date Added</strong></th>
+                            <td>{{ vehicle_details[12] }}</td>
+                        </tr>
+                    {% endif %}
+                {% elif vehicle_details[1] == "Van" %}
+                    <tr>
+                        <th style="background-color: #ADD8E6"><strong>Has Driver’s Side Back Door</strong></th>
+                        <td>{{ vehicle_details[8] }}</td>
+                    </tr>
+                    <tr>
+                        <th style="background-color: #ADD8E6"><strong>List Price</strong></th>
+                        <td>{{ vehicle_details[6] }}</td>
+                    </tr>
+                    {% if session.role in ["Owner"] %}
+                        <tr>
+                        <th style="background-color: #ADD8E6"><strong>Invoice Price</strong></th>
+                        <td>{{ vehicle_details[9] }}</td>
+                        </tr>
+                        <tr>
+                            <th style="background-color: #ADD8E6"><strong>Inventory Clerk</strong></th>
+                            <td>{{ vehicle_details[11] }}</td>
+                        </tr>
+                        <tr>
+                            <th style="background-color: #ADD8E6"><strong>Date Added</strong></th>
+                            <td>{{ vehicle_details[10] }}</td>
+                        </tr>
+                    {% endif %}
+                {% elif vehicle_details[1] == "SUV" %}
+                    <tr>
+                        <th style="background-color: #ADD8E6"><strong>Drivetrain Type</strong></th>
+                        <td>{{ vehicle_details[8] }}</td>
+                    </tr>
+                    <tr>
+                        <th style="background-color: #ADD8E6"><strong>Number Of Cupholders</strong></th>
+                        <td>{{ vehicle_details[9] }}</td>
+                    </tr>
+                    <tr>
+                        <th style="background-color: #ADD8E6"><strong>List Price</strong></th>
+                        <td>{{ vehicle_details[6] }}</td>
+                    </tr>
+                    {% if session.role in ["Owner"] %}
+                            <tr>
+                                <th style="background-color: #ADD8E6"><strong>Invoice Price</strong></th>
+                                <td>{{ vehicle_details[10] }}</td>
+                            </tr>
+                            <tr>
+                                <th style="background-color: #ADD8E6"><strong>Inventory Clerk</strong></th>
+                                <td>{{ vehicle_details[12] }}</td>
+                            </tr>
+                            <tr>
+                                <th style="background-color: #ADD8E6"><strong>Date Added</strong></th>
+                                <td>{{ vehicle_details[11] }}</td>
+                            </tr>
+                    {% endif %}
+                {% endif %}
+            </table>
+
+            {% if session["customer"] %}
+                <h2 style="text-align: left; background-color: #ADD8E6"><strong>Customer</strong></h2>
+                <table class="table table-hover table-bordered">
+                    <tr>
+                        <th style="background-color: #ADD8E6"><strong>Customer Id</strong></th>
+                        <td>{{ session.customer.customer_id }}</td>
+                    </tr>
+                    <tr>
+                        <th style="background-color: #ADD8E6"><strong>Customer Type</strong></th>
+                        <td>{{ session.customer.customer_type }}</td>
+                    </tr>
+                    {% if session.customer.customer_type == "Business" %}
+                        <tr>
+                            <th style="background-color: #ADD8E6"><strong>Business Name</strong></th>
+                            <td>{{ session.customer.business_name }}</td>
+                        </tr>
+                    {% endif %}
+                    <tr>
+                        <th style="background-color: #ADD8E6"><strong>Customer Name</strong></th>
+                        <td>{{ session.customer.customer_name }}</td>
+                    </tr>
+
+                </table>
+            {% endif %}
+
+            <h2 style="text-align: left; background-color: #ADD8E6"><strong>Sale Details</strong></h2>
+            <table class="table table-hover table-bordered">
+                <tr>
+                    <th style="background-color: #ADD8E6"><strong>Price</strong></th>
+                    <td>{{ form.price }}</td>
+                </tr>
+                <tr>
+                    <th style="background-color: #ADD8E6"><strong>Purchase Date</strong></th>
+{#                    <td><input id="today" name="purchaseDate" type="date" required></td>#}
+                    <td>{{ form.purchaseDate(class="datepicker") }}</td>
+                </tr>
+            </table>
+            <div class="form-group">
+                 {{ form.submit(class="btn btn-success") }}
+            </div>
+        </form>
+    </div>
+{#    <script>#}
+{#        document.getElementById('today').value = moment().format('YYYY-MM-DD');#}
+{#    </script>#}
+{% endblock %}

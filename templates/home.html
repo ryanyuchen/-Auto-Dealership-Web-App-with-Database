@@ -1,0 +1,151 @@
+{% extends"layout.html" %}
+{% block content %}
+    <div class="content-section">
+        <br>
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                {% for msg in messages %}
+                      <div class="alert alert-success alert-dismissible">
+                          <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                            <p>{{ msg }}</p>
+                      </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+        <div>
+            <p><i class="fas fa-car-side fa-1x" style="color:indianred"></i> <strong>Number of Available Vehicles:</strong> <span class="badge">{{ count }}</span></p><br>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-4">
+                <form id="search-form" method="POST" action="/search">
+                <!-work with secret key to protect against CSRF attack->
+                    {{ form.hidden_tag() }}
+                    <div class="form-group">
+                        <h3>Vehicle Search</h3>
+                        <input type="hidden" id="vehicle_search" name="vehicle_search">
+                        <label>{{ form.manufacturerName.label(class="form-control-label") }}</label>
+                            <select name="res_manufacturer" class="form-control">
+                                <option selected >All Manufacturers</option>
+                                {% for name in form.manufacturerName %}
+                                    <option>{{ name.data }}</option>
+                                {% endfor %}
+                            </select>
+                    </div>
+                    <div class="form-group">
+                        <label>{{ form.vehicleType.label(class="form-control-label") }}</label>
+                            <select name="res_type" class="form-control">
+                                <option selected >All Vehicle Types</option>
+                                {% for type in form.vehicleType %}
+                                    <option>{{ type.data }}</option>
+                                {% endfor %}
+                            </select>
+                    </div>
+                    <div class="form-group">
+                        <label>{{ form.modelYear.label(class="form-control-label") }}</label>
+                            <select name="res_year" class="form-control">
+                                <option selected >All Model Years</option>
+                                {% for year in form.modelYear %}
+                                    <option>{{ year.data }}</option>
+                                {% endfor %}
+                            </select>
+                    </div>
+                    <div class="form-group">
+                        <label>{{ form.color.label(class="form-control-label") }}</label>
+                            <select name="res_color" class="form-control">
+                                <option selected>All Colors</option>
+                                {% for color in form.color %}
+                                    <option>{{ color.data }}</option>
+                                {% endfor %}
+                            </select>
+                    </div>
+                    <div class="form-group">
+                        <label>{{ form.listPrice.label(class="form-control-label") }}</label>
+                            <select name="res_price_range" class="form-control">
+                                <option selected>Any Price Range</option>
+                                {% for price in form.listPrice %}
+                                    <option>Less than {{ price.data }}</option>
+                                {% endfor %}
+                            </select>
+                    </div>
+                    <div class="form-group">
+                        <label>{{ form.keyword.label(class="form-control-label") }}</label>
+                        {{ form.keyword(class="form-control form-control-lg")}}
+                    </div>
+                    <div class="form-group">
+                        {{ form.submit(class="btn btn-warning") }}
+                    </div>
+                </form>
+            </div>
+            {% if session.role in ["Owner", "Manager", "Service Writer", "Salesperson", "Inventory Clerk"] %}
+                <div class="col-sm-4">
+                    <h3 class="filter"> Search By VIN</h3>
+                    <form  method="POST" action="/search">
+                         {{ form2.hidden_tag() }}
+                        <input type="hidden" id="search_vin" name="search_by_vin">
+                        <div class="form-group">
+                            <label>{{ form2.vin.label(class="form-control-label") }}</label>
+                            {{ form2.vin(class="form-control form-control-lg")}}
+                        </div>
+                        <div class="form-group">
+                            {{ form2.submit(class="btn btn-warning") }}
+                        </div>
+                    </form>
+                    {% if session.role in ["Owner", "Manager"] %}
+                        <h3 class="filter_search">Search By Filter</h3>
+                        <form action="/search" method="POST">
+                            {{ form3.hidden_tag() }}
+                            <input type="hidden" id="search_by_filter" name="search_by_filter">
+                            <div class="form-group">
+                                <label>{{ form3.filter.label(class="form-control-label") }}</label>
+                                {{ form3.filter(class="form-control form-control-lg")}}
+                            </div>
+                            <div class="form-group">
+                                {{ form3.submit(class="btn btn-warning") }}
+                            </div>
+                        </form>
+
+                        <h3 class="report">View Reports</h3>
+                        <form action="/reports" method="POST">
+                            <div class="input-group form-group">
+                                <select class="form-control" id="reports" name="reports">
+                                    <option value="get_SalesbyColor">Sales by Color</option>
+                                    <option value="get_SalesbyType">Sales by Type</option>
+                                    <option value="get_SalesbyManufacturer">Sales by Manufacturer</option>
+                                    <option value="get_GrossCustomerIncome">Gross Customer Income</option>
+                                    <option value="get_RepairsbyManufactureTypeModel">Repairs by Manufacture/Type/Model</option>
+                                    <option value="get_BelowCostSales">Below Cost Sales</option>
+                                    <option value="get_AverageTimeinInventory">Average Time in Inventory</option>
+                                    <option value="get_PartsStatistics">Parts Statistics</option>
+                                    <option value="get_MonthlySales">Monthly Sales</option>
+                                </select>
+                            </div>
+                            <div class="input-group-button form-group">
+                                <input class="btn btn-warning" type="submit" value="View Report">
+                            </div>
+                        </form>
+                    {% endif %}
+                </div>
+            {% endif %}
+            {% if session.role %}
+                <div class="col-sm-4">
+                    {% if session.role in ["Owner", "Inventory Clerk", "Service Writer"] %}
+                    <h3>Quick Tool</h3>
+                    {% endif %}
+                    {% if session.role in ["Owner", "Inventory Clerk"] %}
+                        <a href="/addVehicle" class="btn btn-info btn-lg register" role="button">Register New Vehicle</a>
+                    {% endif %}
+                    {% if session.role in ["Owner", "Service Writer"] %}
+                        <a href="/repair" class="btn btn-info btn-lg" role="button">Open Repair Ticket</a>
+                    {% endif %}
+                </div>
+            {% endif %}
+        </div>
+
+        {% if session.role == "Manager" %}
+
+
+        {% endif %}
+
+    </div>
+{% endblock %}

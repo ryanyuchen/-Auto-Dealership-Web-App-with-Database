@@ -1,0 +1,23 @@
+{% extends"layout.html" %}
+
+{% block content %}
+    <div class="content-section">
+        <h1 class="mt-4">Average Time in Inventory</h1>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                <th scope="col">VehicleType</th>
+                <th scope="col">Average Time in Inventory (in days)</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in data %}
+                        <tr>
+                            <td>{{item[0]}}</td>
+                            <td>{{item[1]}}</td>
+                        </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

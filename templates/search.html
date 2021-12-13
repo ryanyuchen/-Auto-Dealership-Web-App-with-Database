@@ -1,0 +1,57 @@
+{% extends"layout.html" %}
+{% block content %}
+    <div class="container">
+        <div class="selected_vehicles_table">
+            <form action="/details" method="post">
+                <table class="table table-hover table-striped table-responsive table-fixed">
+                    <div class="alert alert-success text-center alert-dismissible">
+                        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                        <h4>
+                            <strong>Congratulations!</strong> We found <strong>{{ selected_vehicles_table|length }}</strong> results.
+                            <br>
+                            Description Match Status Explanation: <strong>✅</strong>: Match
+                                                                  <strong>❎</strong>: Not Match
+                                                                  <strong>☐</strong>: Empty Input
+                        </h4>
+                    </div>
+                    <thead>
+                        <tr>
+                            <th><strong>No.</strong></th>
+                            <th><strong>VIN</strong></th>
+                            <th><strong>Vehicle Type</strong></th>
+                            <th><strong>Model Year</strong></th>
+                            <th><strong>Manufacturer</strong></th>
+                            <th><strong>Model</strong></th>
+                            <th><strong>Color</strong></th>
+                            <th><strong>Description Match Status</strong></th>
+                            <th><strong>List Price</strong></th>
+                        </tr>
+                    </thead>
+                   <tbody>
+                     {% for index in range(selected_vehicles_table|length) %}
+                            <tr>
+                                <td><a href="/search/vin={{selected_vehicles_table[index][0]}}/type={{ selected_vehicles_table[index][1] }}" class="btn btn-light active No" role="button" aria-pressed="true">{{index + 1}}</a></td>
+                                <td><a href="/search/vin={{selected_vehicles_table[index][0]}}/type={{ selected_vehicles_table[index][1] }}" class="btn btn-light active VIN" role="button" aria-pressed="true">{{ selected_vehicles_table[index][0] }}</a></td>
+                                <td>{{ selected_vehicles_table[index][1] }}</td>
+                                <td>{{ selected_vehicles_table[index][2] }}</td>
+                                <td>{{ selected_vehicles_table[index][3] }}</td>
+                                <td>{{ selected_vehicles_table[index][4] }}</td>
+                                <td>{{ selected_vehicles_table[index][5] }}</td>
+                                {% if keyword == "" %}
+                                    <td>☐</td>
+                                {% elif selected_vehicles_table[index][8] == 'Yes' %}
+                                    <td>✅</td>
+                                {%  else %}
+                                    <td>❎</td>
+                                {% endif %}
+                                <td>{{ selected_vehicles_table[index][7] }}</td>
+                            </tr>
+                    {% endfor %}
+                   </tbody>
+                </table>
+    {#            <a href="#" id="loadMore">Load More</a>#}
+            </form>
+        </div>
+    </div>
+
+{% endblock %}

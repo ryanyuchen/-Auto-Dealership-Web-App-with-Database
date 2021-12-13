@@ -1,0 +1,29 @@
+{% extends"layout.html" %}
+
+{% block content %}
+    <div class="content-section">
+        <h1 class="mt-4">Repair By Manufacturer</h1>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                <th scope="col">Manufacturer Name</th>
+                <th scope="col">Count of Repairs</th>
+                <th scope="col">Sum of Part Cost</th>
+                <th scope="col">Sum of Labor Cost</th>
+                <th scope="col">Sum of Total Cost</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in data %}
+                    <tr>
+                        <td class="text-center" onclick="location.href='/report/repairbymanufacturerdrilldown/ManufacturerName={{item[0]}}'"><a href="http://127.0.0.1:5000/report/repairbymanufacturerdrilldown/ManufacturerName={{item[0]}}">{{item[0]}}</a></td>
+                        <td>{{item[1]}}</td>
+                        <td>{{item[2]}}</td>
+                        <td>{{item[3]}}</td>
+                        <td>{{item[4]}}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
